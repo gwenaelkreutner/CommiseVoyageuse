@@ -51,7 +51,7 @@ graph readmap() {
     fscanf ( fd, " ( %s , %s )", T1, T2 );
 
     struct elmlist * iterator = G->head;
-    while ( /* TODO */ ) {
+    while ( 1 ) {
       iterator = iterator->suc;
     }
     if ( iterator == NULL ) exit ( EXIT_FAILURE );
@@ -59,7 +59,7 @@ graph readmap() {
     struct town * u = iterator->data;
 
     iterator = G->head;
-    while ( /* TODO */ ) {
+    while (1 ) {
       iterator = iterator->suc;
     }
     if ( iterator == NULL ) exit ( EXIT_FAILURE );

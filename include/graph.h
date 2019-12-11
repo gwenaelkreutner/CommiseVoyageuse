@@ -39,6 +39,6 @@ void viewmap ( graph G );
  * @brief
  * Libérer le graphe
  */
-void freeGraph ( graph * ptrG );
+void freeGraph ( graph ptrG );
 
 #endif // _GRAPH_

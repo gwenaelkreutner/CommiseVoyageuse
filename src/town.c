@@ -4,7 +4,7 @@
 #include "road.h"
 
 struct town * createTown(char * name) {
-  /* TODO */
+    return 0;
 }
 
 void freeTown ( struct town * T ) {
@@ -12,11 +12,11 @@ void freeTown ( struct town * T ) {
 }
 
 char * getTownName(struct town * T) {
-  /* TODO */
+    return 0;
 }
 
 struct list * getAList(struct town * T) {
-  /* TODO */
+    return 0;
 }
 
 void viewTown (struct town * T) {

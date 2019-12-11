@@ -34,7 +34,7 @@ struct elmlist {
  */
 struct list {
   struct elmlist * head, * tail;
-  int numelm;
+  int len;
 };
 
 /**

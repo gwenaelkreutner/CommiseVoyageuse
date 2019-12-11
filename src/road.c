@@ -3,15 +3,15 @@
 #include "town.h"
 
 struct road * createRoad (struct town * U, struct town * V) {
-  /* TODO */
+    return 0;
 }
 
 void freeRoad ( struct road * R ) {
-  /* TODO */
+  /* TOODO*/
 }
 
 struct town * getURoad(struct road * R) {
-  /* TODO */
+    return 0;
 }
 
 void setURoad ( struct road * R, struct town * T ) {
@@ -19,7 +19,8 @@ void setURoad ( struct road * R, struct town * T ) {
 }
 
 struct town * getVRoad(struct road * R) {
-/* TODO */}
+    return 0;
+}
 
 void setVRoad ( struct road * R, struct town * T ) {
 /* TODO */}
