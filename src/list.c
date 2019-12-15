@@ -93,23 +93,48 @@ void insert_after(struct list * L, void * data, struct elmlist * ptrelm) {
 
 
 void insert_ordered ( struct list * L, void * data, struct town * departure) {
- if( L->head == NULL) {
-   /* TODO */
- } else {
-    struct elmlist * iterator = L->head;
-
-    if( departure == NULL) { // C'est la liste des villes
-      /* TODO */
-    } else { // C'est une liste d'ajacence, une liste de routes
-      /* TODO */
-    }
- 
-    if ( iterator == NULL) { // Ajout en queue
-      /* TODO */
-    } else if ( iterator == L->head ) { // Ajout en Tête
-      /* TODO */
+    if( L->head == NULL) {
+        cons(L, data);
     } else {
-      /* TODO */
+        struct elmlist * iterator = L->head;
+
+        if( departure == NULL) { // C'est la liste des villes
+            /* TODO  avec strcmp sur T->name et data->name */
+            char * name = getTownName(data);
+            bool cont = true;
+            while(iterator && cont) {
+                cont = strcmp(getTownName(iterator->data),name) < 0;
+                if( cont )
+                    iterator = iterator->suc;
+            }
+        } else { // C'est une liste d'ajacence, une liste de routes
+            struct town * townU = getURoad(data);
+            struct town * townV = getVRoad(data);
+            struct town * arrival = (townU == departure) ? townV : townU;
+            
+            char * name = getTownName(arrival);
+            bool cont = true;
+            while(iterator && cont){
+                struct town * iteratorU = getURoad(iterator->data);
+                struct town * iteratorV = getVRoad(iterator->data);
+                if(departure == iteratorU){
+                    cont = strcmp(getTownName(iteratorV),name) < 0;
+                    if( cont )
+                        iterator = iterator->suc;
+                } else {
+                    cont = strcmp(getTownName(iteratorU),name) < 0;
+                    if( cont )
+                        iterator = iterator->suc;
+                }
+            }
+        }
+
+        if ( iterator == NULL ) { // Ajout en queue
+            insert_after(L, data, L->tail);
+        } else if ( iterator == L->head ) { // Ajout en Tête
+            cons(L, data);
+        } else { // On insère avant l'élément pointé
+            insert_after(L, data, iterator->pred);
+        }
     }
-  }
 }

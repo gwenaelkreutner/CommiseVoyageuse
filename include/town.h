@@ -33,4 +33,6 @@ void viewTown (struct town * T );
 // Afficher le nom de la ville T
 void printTownName ( struct town * T );
 
+struct list * readFileFromTown ( char * filename );
+
 #endif // _TOWN_H_
