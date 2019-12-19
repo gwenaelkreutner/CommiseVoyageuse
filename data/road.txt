@@ -1,0 +1,4 @@
+3
+( SF , NY )
+( SF , LA )
+( NY , LA )

@@ -34,4 +34,6 @@ void setVRoad ( struct road * R, struct town * T );
 // Afficher le nom de deux villes que la route (R) connecte
 void viewRoad ( struct road * R );
 
+struct list * readFileFromRoad ( char * filename );
+
 #endif // _ROAD_H_

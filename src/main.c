@@ -34,6 +34,10 @@ int main() {
 
     */
 
+    /*
+     * Main town
+     * 
+     * 
     struct list * L = new();
 	L = readFileFromTown("data/town.txt");
 	void (*ptrPrintTown) (struct town *);
@@ -46,6 +50,20 @@ int main() {
 	void (*ptrFreeTown) (struct town *);
 	ptrFreeTown = &freeTown;
 	dellist(L, ptrFreeTown);
+
+    */
+
+    struct list * L = new();
+	L = readFileFromRoad("data/road.txt");
+	struct town * villeA = createTown("Metz");
+	struct town * villeB = createTown("Paris");
+	
+	struct road * Road1 = createRoad(villeA,villeB);
+	
+	void (*ptrPrintRoad) (struct road * T);
+	ptrPrintRoad = &viewRoad;
+	viewlist(L,ptrPrintRoad);
+
     
     return EXIT_SUCCESS;
 }
