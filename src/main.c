@@ -12,6 +12,11 @@ void printInteger ( int * i ) {
 }
 
 int main() {
+
+    graph G = readmap ();
+	viewmap ( G );
+	freeGraph ( G );
+
     /* 
      *  Main liste
      * 
@@ -53,6 +58,10 @@ int main() {
 
     */
 
+   /*
+     * Main road
+     * 
+     * 
     struct list * L = new();
 	L = readFileFromRoad("data/road.txt");
 	struct town * villeA = createTown("Metz");
@@ -63,8 +72,38 @@ int main() {
 	void (*ptrPrintRoad) (struct road * T);
 	ptrPrintRoad = &viewRoad;
 	viewlist(L,ptrPrintRoad);
+    */
 
-    
+    /*
+     * Main insert_ordered
+     * 
+     * 
+
+	struct list * L = new();
+
+	struct town * villeA = createTown("A");
+	struct town * villeB = createTown("B");
+	struct town * villeC = createTown("C");
+	struct town * villeD = createTown("D");
+	struct town * villeP = createTown("E");
+
+	struct road * RAB = createRoad(villeA, villeB);
+	struct road * RAC = createRoad(villeA, villeC);
+	struct road * RBC = createRoad(villeA, villeD);
+	struct road * RTP = createRoad(villeA, villeP);
+
+
+	void (*ptrPrintR) (struct road * R);
+	ptrPrintR = &viewRoad;
+
+	insert_ordered(L, RTP, villeA);
+	insert_ordered(L, RAC, villeA);
+	insert_ordered(L, RAC, villeA);
+	insert_ordered(L, RAB, villeA);
+
+	viewlist(L, ptrPrintR);
+	*/
+
     return EXIT_SUCCESS;
 }
 

@@ -51,7 +51,7 @@ graph readmap() {
     fscanf ( fd, " ( %s , %s )", T1, T2 );
 
     struct elmlist * iterator = G->head;
-    while ( 1 ) {
+    while ( strcmp(getTownName(iterator->data), T1) != 0 ) {
       iterator = iterator->suc;
     }
     if ( iterator == NULL ) exit ( EXIT_FAILURE );
@@ -59,7 +59,7 @@ graph readmap() {
     struct town * u = iterator->data;
 
     iterator = G->head;
-    while (1 ) {
+    while ( strcmp(getTownName(iterator->data), T2) != 0 ) {
       iterator = iterator->suc;
     }
     if ( iterator == NULL ) exit ( EXIT_FAILURE );
@@ -91,22 +91,53 @@ graph readmap() {
 }
   
 void viewmap ( graph G ) {
-  /* TODO */
+    int nb = G->len;
+    printf("%d villes -->\n", nb);
+    struct elmlist * iterator = G->head;
+
+    while(iterator){
+        viewTown(iterator->data);
+        iterator = iterator->suc;
+    }
 }
 
-void freeGraph ( graph G ) {
-  /** TODO 
-   * Il faut malgré tout supprimer les villes ET les routes.
-   * 
-   * Faites attention que les routes ne sont référencées que par
-   * les listes d'adjacence des villes.
-   * 
-   * Vous devez parcourir les villes (le graphe G)
-   *  Pour chaque ville V, parcourez sa liste d'adjance
-   *    (liste des routes auxquelles V est connexe)
-   *    Pour chaque route R de la liste d'adjacence,
-   *      vous devez déréférencer (NUll) la ville V
-   *      Si les deux villes U et V de R sont déréférencées
-   *      Alors vous pouvez supprimer la route R
-   */
+void freeGraph ( graph ptrG ) {
+    /** TODO 
+     * Il faut malgré tout supprimer les villes ET les routes.
+     * 
+     * Faites attention que les routes ne sont référencées que par
+     * les listes d'adjacence des villes.
+     * 
+     * Vous devez parcourir les villes (le graphe G)
+     *  Pour chaque ville V, parcourez sa liste d'adjance
+     *    (liste des routes auxquelles V est connexe)
+     *    Pour chaque route R de la liste d'adjacence,
+     *      vous devez déréférencer (NUll) la ville V
+     *      Si les deux villes U et V de R sont déréférencées
+     *      Alors vous pouvez supprimer la route R
+     */
+    struct elmlist * iterator = ptrG->head;
+  
+    while (iterator){
+        struct town * V = ((struct town*) iterator->data);
+        struct elmlist * iteratorRoad = V->alist->head;
+
+        while (iteratorRoad){
+            struct road * R = ((struct road*) iteratorRoad->data);
+            if (getURoad(R) == (iterator->data)){
+                setURoad(R, NULL);
+            } else if(getVRoad(R) == (iterator->data)){
+                setVRoad(R, NULL);
+            }
+            if (getURoad(R) == NULL && getVRoad(R) == NULL){
+                freeRoad(R);
+            }
+            iteratorRoad = iteratorRoad->suc;
+        }
+        iterator = iterator->suc;
+    }
+
+    void (*ptrFreeTown) (struct town * T);
+    ptrFreeTown = &freeTown;
+    dellist(ptrG, ptrFreeTown);
 }

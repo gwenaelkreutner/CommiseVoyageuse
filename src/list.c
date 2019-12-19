@@ -92,7 +92,7 @@ void insert_after(struct list * L, void * data, struct elmlist * ptrelm) {
 }
 
 
-void insert_ordered ( struct list * L, void * data, struct town * departure) {
+void insert_ordered ( struct list * L, void * data, struct town * departure ) {
     if( L->head == NULL) {
         cons(L, data);
     } else {
