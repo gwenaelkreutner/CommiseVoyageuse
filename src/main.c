@@ -20,6 +20,7 @@ int main() {
 	viewPrim ( E );
 
     freeGraph ( G );
+	dellist(E, NULL);
 
     /* 
      *  Main liste

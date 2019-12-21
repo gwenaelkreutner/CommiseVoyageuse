@@ -3,6 +3,6 @@ SF
 NY
 LA
 3
-( SF , NY )
-( SF , LA )
-( NY , LA )
+( SF , NY , 3.5)
+( SF , LA , 2.4)
+( NY , LA , 4.7)

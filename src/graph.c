@@ -161,6 +161,8 @@ struct list * prim( graph ptrG, struct town * ptrS ){
         iteratorAdd = iteratorAdd->pred;
     }
     
+    double poidACM = 0;
+    // Tant qu'il y a une ville dans CE
     while (CE->len > 0){
         struct town * S;
         struct elmlist * iteratorTown = E->head;
@@ -184,7 +186,7 @@ struct list * prim( graph ptrG, struct town * ptrS ){
                     }
                     if (temp <= min){
                         min = temp;
-                        S = townUV;                    
+                        S = townUV;
                     }
                 }
             
@@ -194,6 +196,7 @@ struct list * prim( graph ptrG, struct town * ptrS ){
             }
             iteratorTown = iteratorTown->suc;
         }
+        poidACM += min;
         // Ajout de la ville S la plus proche dans E
         insert_after(E, S, E->tail);
 
@@ -224,6 +227,9 @@ struct list * prim( graph ptrG, struct town * ptrS ){
             free(iteratorDelete);
         }
     }
+    // Afficher le poid de l'ACM
+    printf("\nLe poids de la longueur optimale de l'ACM : %lf \n", poidACM);
+
     return E;
 }
 
