@@ -41,4 +41,8 @@ void viewmap ( graph G );
  */
 void freeGraph ( graph ptrG );
 
+struct list * prim( graph ptrG, struct town * ptrS );
+
+void viewPrim ( struct list * L );
+
 #endif // _GRAPH_

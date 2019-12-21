@@ -39,20 +39,20 @@ void viewTown (struct town * T) {
         struct town * roadU = getURoad(iterator->data);
 
         struct town * roadUV = (roadU == T) ? getVRoad(iterator->data) : roadU;
-        printf("%s\n", roadUV->name);
+        printf("\t\t %s ( %lf km )\n", roadUV->name, getKmRoad(iterator->data));
 
         iterator = iterator->suc;
     }
 }
 
 void printTownName ( struct town * T ) {
-    printf("%s | ", getTownName(T));
+  printf("%s | ", getTownName(T));
 }
 
 struct list * readFileFromTown ( char * filename ) {
-    struct list * L = new();
-    FILE * file = fopen(filename, "r");
-    int nbVille;
+  struct list * L = new();
+  FILE * file = fopen(filename, "r");
+  int nbVille;
 
     if (file == NULL)
     {

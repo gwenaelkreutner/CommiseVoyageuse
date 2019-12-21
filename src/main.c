@@ -15,7 +15,11 @@ int main() {
 
     graph G = readmap ();
 	viewmap ( G );
-	freeGraph ( G );
+
+    struct list * E = prim(G, G->tail->data);
+	viewPrim ( E );
+
+    freeGraph ( G );
 
     /* 
      *  Main liste

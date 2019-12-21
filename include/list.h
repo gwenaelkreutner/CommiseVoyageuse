@@ -22,7 +22,7 @@ struct town;
  * (+) Une référence (pred) à l'élément précédent
  */
 struct elmlist {
-  void * data;
+  void* data;
   struct elmlist * suc, * pred;
 };
 
@@ -33,8 +33,8 @@ struct elmlist {
  * (+) Le nombre d'éléments
  */
 struct list {
-  struct elmlist * head, * tail;
-  int len;
+	struct elmlist * head, * tail;
+	int len;
 };
 
 /**
@@ -84,6 +84,8 @@ void viewlist ( struct list * L, void (*ptrF) () );
  *    le pointeur d'élément ptrelm désigne obligatoirement
  *    un élément de la liste L.
  */
+bool presence ( struct elmlist * E, void * data );
+
 void insert_after ( struct list * L, void * data, struct elmlist * ptrelm );
 
 /**

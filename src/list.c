@@ -70,6 +70,16 @@ void cons ( struct list * L, void * data ) {
     L->len++;
 }
 
+bool presence ( struct elmlist * E, void * data ) {
+    if (E == NULL){
+        return false;
+    } else if ( E->data == data ){
+        return true;
+    } else {
+        return presence(E->suc, data);
+    }
+}
+
 void insert_after(struct list * L, void * data, struct elmlist * ptrelm) {
     struct elmlist * E = (struct elmlist *) calloc( 1, sizeof(struct elmlist));
     

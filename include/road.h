@@ -9,12 +9,12 @@
  */
 struct road {
   struct town * U, * V; // indices of towns in graph->towns
-  // double km;
+  double km;
   // and all the stuff you want/need
 };
 
 // Créer une route qui relie les villes u et v données
-struct road * createRoad(struct town * u, struct town * v);
+struct road * createRoad(struct town * u, struct town * v, double km);
 
 // Libérer une route référencée par ptrR
 void freeRoad ( struct road * R );
@@ -30,6 +30,8 @@ struct town * getVRoad(struct road * R);
 
 // Modifier la référence V
 void setVRoad ( struct road * R, struct town * T );
+
+double getKmRoad( struct road * R );
 
 // Afficher le nom de deux villes que la route (R) connecte
 void viewRoad ( struct road * R );

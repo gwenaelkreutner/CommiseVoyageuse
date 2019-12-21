@@ -48,7 +48,8 @@ graph readmap() {
   fscanf ( fd, " %d", &nb );
   for ( int i = 0; i < nb; i++ ) {
     char T1[20], T2[20];
-    fscanf ( fd, " ( %s , %s )", T1, T2 );
+    double km;
+    fscanf ( fd, " ( %s , %s , %lf)", T1, T2 , &km);
 
     struct elmlist * iterator = G->head;
     while ( strcmp(getTownName(iterator->data), T1) != 0 ) {
@@ -66,7 +67,7 @@ graph readmap() {
 
     struct town * v = iterator->data;
 
-    struct road * R = createRoad(u, v);
+    struct road * R = createRoad(u, v, km);
 
     cons ( edges, R ); // un simple ajout en tête
   }
@@ -120,7 +121,7 @@ void freeGraph ( graph ptrG ) {
   
     while (iterator){
         struct town * V = ((struct town*) iterator->data);
-        struct elmlist * iteratorRoad = V->alist->head;
+        struct elmlist * iteratorRoad = getAList(V)->head;
 
         while (iteratorRoad){
             struct road * R = ((struct road*) iteratorRoad->data);
@@ -140,4 +141,98 @@ void freeGraph ( graph ptrG ) {
     void (*ptrFreeTown) (struct town * T);
     ptrFreeTown = &freeTown;
     dellist(ptrG, ptrFreeTown);
+}
+
+struct list * prim( graph ptrG, struct town * ptrS ){
+    /*
+     * E corrrespond a l'ensemble des sommets appartenant a l'ACM
+     * CE correspond aux sommets non encore selectionner ( Ensemble complementaire )
+     * 
+    */
+    struct list * E = new(), * CE = new();
+    cons(E, ptrS);
+
+    struct elmlist * iteratorAdd = ptrG->tail;
+
+    for (size_t i = 0; i < ptrG->len; i++) {
+        if (iteratorAdd->data != ptrS) {
+            cons(CE, iteratorAdd->data);
+        }  
+        iteratorAdd = iteratorAdd->pred;
+    }
+    
+    while (CE->len > 0){
+        struct town * S;
+        struct elmlist * iteratorTown = E->head;
+        double min;
+        bool first = true;
+        // Recherche de la ville S la plus proche
+        for (size_t i = 0; i < E->len; i++) {
+            struct town * townI = iteratorTown->data;
+            struct elmlist * iteratorAdjacency = getAList(townI)->head;
+            struct road * iteratorRoad = iteratorAdjacency->data;
+            for (int j = 0; j < townI->alist->len; j++) {
+                struct town * townU = getURoad(iteratorRoad);
+                struct town * townV = getVRoad(iteratorRoad);
+                struct town * townUV = (townI == townU) ? townV : townU;
+                if (presence(CE->head, townUV)) {
+                    double temp = getKmRoad(iteratorRoad);
+                    if (first){ // initialiser min si c'est le premier parcours
+                        min = temp;
+                        S = townUV;
+                        first = false;
+                    }
+                    if (temp <= min){
+                        min = temp;
+                        S = townUV;                    
+                    }
+                }
+            
+                iteratorAdjacency = iteratorAdjacency->suc;
+                if (iteratorAdjacency != NULL)
+                    iteratorRoad = iteratorAdjacency->data;
+            }
+            iteratorTown = iteratorTown->suc;
+        }
+        // Ajout de la ville S la plus proche dans E
+        insert_after(E, S, E->tail);
+
+        // Suppression de la ville S dans CE
+        struct elmlist * iteratorDelete = CE->head;
+        struct town * iteratorDeleteTown = iteratorDelete->data;
+        while (iteratorDelete && iteratorDeleteTown != S) {
+            iteratorDelete = iteratorDelete->suc;
+            if (iteratorDelete != NULL)
+                iteratorDeleteTown = iteratorDelete->data;
+        }
+        
+        if (iteratorDeleteTown) {
+            if ( iteratorDelete->suc == NULL && iteratorDelete->pred == NULL ) {
+                CE->head = NULL;
+                CE->tail = NULL;
+            } else if ( iteratorDelete->pred == NULL ) {
+                iteratorDelete->suc->pred = NULL;
+                CE->head = iteratorDelete->suc;
+            } else if (iteratorDelete->suc == NULL) {
+                iteratorDelete->pred->suc = NULL;
+                CE->tail = iteratorDelete->pred;
+            } else {
+                iteratorDelete->pred->suc = iteratorDelete->suc;
+                iteratorDelete->suc->pred = iteratorDelete->pred;
+            }
+            CE->len--;
+            free(iteratorDelete);
+        }
+    }
+    return E;
+}
+
+void viewPrim( struct list * L ){
+    struct elmlist * iterator = L->head;
+    printf("\n\tParcours préfixé de l'ACM ( Sommet de depart : %s ):  \n\n", getTownName(iterator->data));
+    while (iterator) {
+        printf("--> ( %s ) ", getTownName(iterator->data));
+        iterator = iterator->suc;
+    }
+    printf("\n");
 }
